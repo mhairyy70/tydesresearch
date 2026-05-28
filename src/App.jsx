@@ -490,19 +490,12 @@ function Home({ go, addToCart, openProduct }) {
         </div>
 
         <div className="rounded-[2.5rem] border border-white/10 bg-white/[0.06] p-6 shadow-2xl">
-          <div className="grid grid-cols-3 gap-3">
-            {products.slice(0, 3).map((product) => (
-              <div
-                key={product.id}
-                className="grid min-h-72 place-items-center rounded-3xl bg-white/10 p-3"
-              >
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="max-h-64 object-contain"
-                />
-              </div>
-            ))}
+          <div className="overflow-hidden rounded-3xl">
+            <img
+              src={summerPackImg}
+              alt="Summer Pack Bundle"
+              className="w-full object-cover"
+            />
           </div>
 
           <div className="mt-5 rounded-3xl bg-[#061b3c] p-5">
