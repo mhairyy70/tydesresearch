@@ -74,7 +74,7 @@ const products = [
     price: 1119,
     oldPrice: 1189,
     image: summerPackImg,
-    text: "Includes RETA 10MG, GHK-CU 50MG, BAC WATER 3ML, and TYDES vial holder.",
+    text: "Includes RETA 10MG, GHK-CU 50MG, BAC Water 3ML, and Big Vial Holder.",
     inStock: true,
   },
 ];
@@ -192,11 +192,17 @@ function App() {
 
   useEffect(() => {
     const STOCK_MAP = { "GHK-CU": "ghk", "RETA": "reta", "BAC Water": "bac", "Big Vial Holder": "holder" };
+    const BUNDLE_COMPONENTS = ["RETA", "GHK-CU", "BAC Water", "Big Vial Holder"];
     fetch("/api/get-stock")
       .then((r) => r.json())
       .then((data) => {
+        const bundleInStock = BUNDLE_COMPONENTS.every((name) => {
+          const item = data.find((s) => s.name === name);
+          return item ? item.qty > 0 : true;
+        });
         setLiveProducts(
           products.map((p) => {
+            if (p.id === "bundle") return { ...p, inStock: bundleInStock };
             const stockName = Object.keys(STOCK_MAP).find((k) => STOCK_MAP[k] === p.id);
             if (!stockName) return p;
             const item = data.find((s) => s.name === stockName);
@@ -1351,8 +1357,7 @@ function Bundle({ addToCart, openProduct, products }) {
       <div className="rounded-[2.5rem] border border-white/10 bg-white/[0.06] p-8">
         <p className="text-4xl font-bold">1119 AED</p>
         <p className="mt-3 text-blue-100/70">
-          Includes RETA 10MG, GHK-CU 50MG, BAC WATER 3ML, and optional TYDES
-          vial holder.
+          Includes RETA 10MG, GHK-CU 50MG, BAC Water 3ML, and Big Vial Holder.
         </p>
         <div className="mt-7 flex flex-col gap-4 sm:flex-row">
           <button
