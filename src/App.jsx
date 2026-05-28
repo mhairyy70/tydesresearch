@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import AdminPanel from "./pages/AdminPanel";
+import summerPackImg from "./assets/summer-pack.png";
 import {
   ShoppingBag,
   Menu,
@@ -67,11 +68,11 @@ const products = [
   },
   {
     id: "bundle",
-    name: "TYDES Research Starter Set",
+    name: "Summer Pack Bundle",
     category: "Bundle",
     price: 1119,
     oldPrice: 1189,
-    image: "",
+    image: summerPackImg,
     text: "Includes RETA 10MG, GHK-CU 50MG, BAC WATER 3ML, and TYDES vial holder.",
     inStock: true,
   },
@@ -509,7 +510,7 @@ function Home({ go, addToCart, openProduct }) {
               Bundle
             </p>
             <p className="mt-2 text-2xl font-semibold">
-              TYDES Research Starter Set
+              Summer Pack Bundle
             </p>
             <p className="mt-1 text-blue-100/60">1119 AED launch offer</p>
           </div>
@@ -1299,7 +1300,7 @@ function Bundle({ addToCart, openProduct }) {
 
   return (
     <Section
-      title="TYDES Research Starter Set"
+      title="Summer Pack Bundle"
       subtitle="A complete research bundle with clean TYDES organization."
     >
       <div className="rounded-[2.5rem] border border-white/10 bg-white/[0.06] p-8">
