@@ -20,6 +20,10 @@ import {
   Lock,
 } from "lucide-react";
 
+// ─── Toggle this to show/hide the coming soon page ───────────────────────────
+const COMING_SOON = true;
+// ─────────────────────────────────────────────────────────────────────────────
+
 const DISCLAIMER =
   "For laboratory research use only. Not for human consumption. Not intended to diagnose, treat, cure, or prevent any disease.";
 
@@ -179,7 +183,50 @@ function AgeResearchPopup({ accepted, setAccepted }) {
   );
 }
 
+function ComingSoon() {
+  return (
+    <div className="min-h-screen bg-[#03142d] text-white flex flex-col items-center justify-center px-5 font-sans">
+      <div className="flex items-center gap-4 mb-12">
+        <div className="grid h-14 w-20 place-items-center rounded-2xl bg-white/10">
+          <WaveLogo className="h-6 w-16 text-white" />
+        </div>
+        <div>
+          <p className="tracking-[0.45em] text-white">TYDES</p>
+          <p className="text-xs uppercase tracking-[0.25em] text-blue-100/60">Research</p>
+        </div>
+      </div>
+
+      <div className="max-w-xl text-center">
+        <p className="mb-5 inline-block rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs uppercase tracking-[0.25em] text-blue-100">
+          Temporarily Unavailable
+        </p>
+        <h1 className="text-4xl font-semibold leading-tight tracking-[-0.04em] md:text-5xl">
+          We're finalising our licensing.
+        </h1>
+        <p className="mt-6 text-lg leading-8 text-blue-100/70">
+          TYDES Research will be available soon. We're completing our regulatory
+          and licensing process to ensure full compliance before launch.
+        </p>
+        <p className="mt-4 text-blue-100/50 text-sm leading-6">
+          For research inquiries in the meantime, reach us at{" "}
+          <a
+            href={`mailto:${CONTACT_EMAIL}`}
+            className="text-white underline underline-offset-4 transition hover:text-blue-200"
+          >
+            {CONTACT_EMAIL}
+          </a>
+        </p>
+      </div>
+
+      <p className="absolute bottom-8 text-xs text-blue-100/30 tracking-widest uppercase">
+        {DISCLAIMER}
+      </p>
+    </div>
+  );
+}
+
 function App() {
+  if (COMING_SOON) return <ComingSoon />;
   if (window.location.pathname === "/admin-tydes") return <AdminPanel />;
 
   const [acceptedPopup, setAcceptedPopup] = useState(false);
