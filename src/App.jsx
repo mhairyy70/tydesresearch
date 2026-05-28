@@ -15,6 +15,7 @@ import {
   MapPin,
   MessageCircle,
   Clock,
+  Lock,
 } from "lucide-react";
 
 const DISCLAIMER =
@@ -369,6 +370,14 @@ function App() {
           <MessageCircle size={18} />
           WhatsApp
         </a>
+
+        <button
+          onClick={() => { window.location.href = "/admin-tydes"; }}
+          className="flex h-7 w-7 items-center justify-center self-end rounded-full bg-white/5 text-white/20 transition hover:bg-white/10 hover:text-white/40"
+          aria-hidden="true"
+        >
+          <Lock size={11} />
+        </button>
       </div>
     </div>
   );
