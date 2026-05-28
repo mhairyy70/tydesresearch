@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import AdminPanel from "./pages/AdminPanel";
 import summerPackImg from "./assets/summer-pack.png";
+import ghkPackagingImg from "./assets/ghk-packaging.png";
 import {
   ShoppingBag,
   Menu,
@@ -1277,6 +1278,7 @@ function WhyTydes() {
           icon={<PackageCheck />}
           title="Refined packaging"
           text="Clean labeling, premium presentation, and deep-blue brand styling."
+          image={ghkPackagingImg}
         />
         <Info
           icon={<WaveLogo className="h-6 w-20 text-white" />}
@@ -1321,12 +1323,23 @@ function Bundle({ addToCart, openProduct }) {
   );
 }
 
-function Info({ icon, title, text }) {
+function Info({ icon, title, text, image }) {
   return (
-    <div className="rounded-[2rem] border border-white/10 bg-white/[0.06] p-7">
-      {icon && <div className="mb-5 text-blue-100">{icon}</div>}
-      <h3 className="text-2xl font-semibold">{title}</h3>
-      <p className="mt-3 leading-7 text-blue-100/70">{text}</p>
+    <div className={`overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.06] ${!image ? "p-7" : ""}`}>
+      {image && (
+        <div className="h-56 overflow-hidden">
+          <img
+            src={image}
+            alt={title}
+            className="h-full w-full object-cover transition duration-700 hover:scale-105"
+          />
+        </div>
+      )}
+      <div className={image ? "p-7" : ""}>
+        {icon && <div className="mb-5 text-blue-100">{icon}</div>}
+        <h3 className="text-2xl font-semibold">{title}</h3>
+        <p className="mt-3 leading-7 text-blue-100/70">{text}</p>
+      </div>
     </div>
   );
 }
