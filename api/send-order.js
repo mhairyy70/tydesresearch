@@ -8,9 +8,9 @@ export default async function handler(req, res) {
   const itemRows = cartItems.map(item => `
     <tr>
       <td style="padding:10px;border-bottom:1px solid #eee">${item.name}${item.spec ? ' ' + item.spec : ''}</td>
-      <td style="padding:10px;border-bottom:1px solid #eee">${item.quantity}</td>
+      <td style="padding:10px;border-bottom:1px solid #eee">${item.qty}</td>
       <td style="padding:10px;border-bottom:1px solid #eee">${item.price} AED</td>
-      <td style="padding:10px;border-bottom:1px solid #eee">${item.quantity * item.price} AED</td>
+      <td style="padding:10px;border-bottom:1px solid #eee">${item.qty * item.price} AED</td>
     </tr>`).join('');
 
   const html = `
