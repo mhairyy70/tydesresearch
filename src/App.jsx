@@ -1268,23 +1268,55 @@ function WhyTydes() {
       title="Why TYDES"
       subtitle="Scientific, minimal, and built around trust."
     >
-      <div className="grid gap-6 md:grid-cols-3">
-        <Info
-          icon={<FlaskConical />}
-          title="Research-only standard"
-          text="Every page clearly reinforces laboratory research use only."
-        />
-        <Info
-          icon={<PackageCheck />}
-          title="Refined packaging"
-          text="Clean labeling, premium presentation, and deep-blue brand styling."
-          image={ghkPackagingImg}
-        />
-        <Info
-          icon={<WaveLogo className="h-6 w-20 text-white" />}
-          title="Wave identity"
-          text="The TYDES mark represents precision, flow, organization, and trust."
-        />
+      <div className="grid gap-4">
+
+        {/* Hero editorial card — Refined packaging */}
+        <div className="relative flex min-h-[480px] items-end overflow-hidden rounded-[2rem]">
+          <img
+            src={ghkPackagingImg}
+            alt="Refined packaging"
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
+          <div className="relative z-10 p-10 md:p-16">
+            <p className="mb-4 text-xs uppercase tracking-[0.4em] text-white/50">
+              Premium Presentation
+            </p>
+            <h3 className="text-5xl font-bold leading-[1.1] tracking-tight text-white md:text-6xl">
+              Refined<br />packaging.
+            </h3>
+            <p className="mt-5 max-w-lg text-base leading-7 text-white/65">
+              Clean labeling, premium presentation, and deep-blue brand styling
+              built for the research environment.
+            </p>
+          </div>
+        </div>
+
+        {/* Two smaller cards */}
+        <div className="grid gap-4 md:grid-cols-2">
+          <div className="rounded-[2rem] border border-white/10 bg-white/[0.06] p-9">
+            <div className="mb-6 text-blue-100">
+              <FlaskConical size={26} />
+            </div>
+            <h3 className="text-2xl font-semibold">Research-only standard</h3>
+            <p className="mt-3 leading-7 text-blue-100/70">
+              Every page clearly reinforces laboratory research use only — no
+              human-use claims, no ambiguity.
+            </p>
+          </div>
+
+          <div className="rounded-[2rem] border border-white/10 bg-white/[0.06] p-9">
+            <div className="mb-6 text-blue-100">
+              <WaveLogo className="h-6 w-20 text-white" />
+            </div>
+            <h3 className="text-2xl font-semibold">Wave identity</h3>
+            <p className="mt-3 leading-7 text-blue-100/70">
+              The TYDES mark represents precision, flow, organization, and trust
+              — a calm identity for serious research.
+            </p>
+          </div>
+        </div>
+
       </div>
     </Section>
   );
