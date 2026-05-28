@@ -339,8 +339,8 @@ ${customer.notes ? `<div style="margin-bottom:20px;"><div class="label">Notes</d
             >
               <option value="">— Select product —</option>
               {stock.map(s => (
-                <option key={s.id} value={s.id}>
-                  {s.name}{s.spec ? " " + s.spec : ""} — {s.price} AED ({s.qty} in stock)
+                <option key={s.id} value={s.id} disabled={s.qty === 0}>
+                  {s.name}{s.spec ? " " + s.spec : ""} — {s.price} AED ({s.qty === 0 ? "Out of Stock" : `${s.qty} in stock`})
                 </option>
               ))}
             </select>

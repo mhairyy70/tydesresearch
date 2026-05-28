@@ -32,6 +32,7 @@ const products = [
     oldPrice: 699,
     image: "/images/reta.png",
     text: "Research-use-only lyophilized compound. No human-use claims.",
+    inStock: true,
   },
   {
     id: "ghk",
@@ -41,6 +42,7 @@ const products = [
     oldPrice: 419,
     image: "/images/ghk-cu.png",
     text: "Research-use-only compound. No cosmetic or human-use claims.",
+    inStock: true,
   },
   {
     id: "bac",
@@ -50,6 +52,7 @@ const products = [
     oldPrice: 63,
     image: "/images/bac-water.png",
     text: "Sterile laboratory solvent support item for research workflows only.",
+    inStock: true,
   },
   {
     id: "holder",
@@ -59,6 +62,7 @@ const products = [
     oldPrice: null,
     image: "",
     text: "Compact TYDES-branded holder for organizing 3ml and 5ml research vials.",
+    inStock: true,
   },
   {
     id: "bundle",
@@ -68,6 +72,7 @@ const products = [
     oldPrice: 1189,
     image: "",
     text: "Includes RETA 10MG, GHK-CU 50MG, BAC WATER 3ML, and TYDES vial holder.",
+    inStock: true,
   },
 ];
 
@@ -569,12 +574,19 @@ function ProductGrid({ items, addToCart, openProduct }) {
 }
 
 function ProductCard({ product, addToCart, openProduct }) {
+  const { inStock } = product;
+
   return (
-    <article className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.06] transition hover:-translate-y-2 hover:bg-white/[0.09]">
+    <article className={`overflow-hidden rounded-[2rem] border border-white/10 transition hover:-translate-y-2 ${inStock ? "bg-white/[0.06] hover:bg-white/[0.09]" : "bg-white/[0.03] opacity-60"}`}>
       <button
         onClick={() => openProduct(product)}
-        className="grid h-80 w-full place-items-center bg-gradient-to-br from-white/10 to-blue-400/10 p-6"
+        className="relative grid h-80 w-full place-items-center bg-gradient-to-br from-white/10 to-blue-400/10 p-6"
       >
+        {!inStock && (
+          <span className="absolute left-4 top-4 rounded-full bg-red-500/90 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-white">
+            Out of Stock
+          </span>
+        )}
         {product.image ? (
           <img
             src={product.image}
@@ -617,12 +629,21 @@ function ProductCard({ product, addToCart, openProduct }) {
             <p className="text-2xl font-bold">{product.price} AED</p>
           </div>
 
-          <button
-            onClick={() => addToCart(product)}
-            className="rounded-full bg-white px-5 py-3 text-sm font-semibold text-[#03142d]"
-          >
-            Add
-          </button>
+          {inStock ? (
+            <button
+              onClick={() => addToCart(product)}
+              className="rounded-full bg-white px-5 py-3 text-sm font-semibold text-[#03142d]"
+            >
+              Add
+            </button>
+          ) : (
+            <button
+              disabled
+              className="rounded-full bg-white/10 px-5 py-3 text-sm font-semibold text-white/30 cursor-not-allowed"
+            >
+              Out of Stock
+            </button>
+          )}
         </div>
       </div>
     </article>
@@ -669,12 +690,21 @@ function ProductPage({ product, addToCart }) {
             <p className="mt-4 leading-7 text-blue-100/70">{product.text}</p>
           </div>
 
-          <button
-            onClick={() => addToCart(product)}
-            className="mt-7 rounded-full bg-white px-8 py-4 font-semibold text-[#03142d]"
-          >
-            Add to Cart
-          </button>
+          {product.inStock ? (
+            <button
+              onClick={() => addToCart(product)}
+              className="mt-7 rounded-full bg-white px-8 py-4 font-semibold text-[#03142d]"
+            >
+              Add to Cart
+            </button>
+          ) : (
+            <button
+              disabled
+              className="mt-7 rounded-full bg-white/10 px-8 py-4 font-semibold text-white/30 cursor-not-allowed"
+            >
+              Out of Stock
+            </button>
+          )}
 
           <div className="mt-6 rounded-3xl border border-blue-200/20 bg-blue-300/10 p-5 text-sm leading-6 text-blue-50/80">
             <strong>Research-only disclaimer:</strong> {DISCLAIMER}
