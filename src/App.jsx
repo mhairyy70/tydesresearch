@@ -530,7 +530,6 @@ function Home({ go, addToCart, openProduct, products }) {
             <p className="mt-2 text-2xl font-semibold">
               Summer Pack Bundle
             </p>
-            <p className="mt-1 text-blue-100/60">1119 AED launch offer</p>
           </div>
         </div>
       </section>
@@ -647,16 +646,7 @@ function ProductCard({ product, addToCart, openProduct }) {
           {product.text}
         </p>
 
-        <div className="mt-5 flex items-end justify-between gap-4">
-          <div>
-            {product.oldPrice && (
-              <p className="text-sm text-blue-100/40 line-through">
-                {product.oldPrice} AED
-              </p>
-            )}
-            <p className="text-2xl font-bold">{product.price} AED</p>
-          </div>
-
+        <div className="mt-5 flex justify-end">
           {inStock ? (
             <button
               onClick={() => addToCart(product)}
@@ -709,13 +699,7 @@ function ProductPage({ product, addToCart }) {
           </h1>
 
           <div className="mt-6 rounded-3xl border border-white/10 bg-white/[0.06] p-6">
-            {product.oldPrice && (
-              <p className="text-blue-100/40 line-through">
-                {product.oldPrice} AED
-              </p>
-            )}
-            <p className="text-4xl font-bold">{product.price} AED</p>
-            <p className="mt-4 leading-7 text-blue-100/70">{product.text}</p>
+            <p className="leading-7 text-blue-100/70">{product.text}</p>
           </div>
 
           {product.inStock ? (
@@ -781,7 +765,6 @@ function Cart({ cart, subtotal, updateQty, removeItem, go }) {
             >
               <div>
                 <h3 className="text-2xl font-semibold">{item.name}</h3>
-                <p className="mt-2 text-blue-100/60">{item.price} AED each</p>
               </div>
 
               <div className="flex items-center gap-3">
@@ -812,12 +795,7 @@ function Cart({ cart, subtotal, updateQty, removeItem, go }) {
           ))}
 
           <div className="rounded-[2rem] border border-white/10 bg-white/[0.08] p-7">
-            <div className="flex justify-between text-2xl">
-              <span>Subtotal</span>
-              <strong>{subtotal} AED</strong>
-            </div>
-
-            <p className="mt-5 rounded-2xl bg-blue-300/10 p-4 text-sm leading-6 text-blue-50/80">
+            <p className="rounded-2xl bg-blue-300/10 p-4 text-sm leading-6 text-blue-50/80">
               {DISCLAIMER}
             </p>
 
@@ -1051,16 +1029,8 @@ ${customer.notes ? `<div style="margin-bottom:20px;"><div class="label">Notes</d
                 <span>
                   {item.name} × {item.qty}
                 </span>
-                <strong className="text-white">
-                  {item.price * item.qty} AED
-                </strong>
               </div>
             ))}
-          </div>
-
-          <div className="mt-6 flex justify-between border-t border-white/10 pt-5 text-xl">
-            <span>Total</span>
-            <strong>{subtotal} AED</strong>
           </div>
 
           <p className="mt-4 rounded-2xl bg-blue-300/10 p-4 text-sm leading-6 text-blue-50/80">
@@ -1355,8 +1325,7 @@ function Bundle({ addToCart, openProduct, products }) {
       subtitle="A complete research bundle with clean TYDES organization."
     >
       <div className="rounded-[2.5rem] border border-white/10 bg-white/[0.06] p-8">
-        <p className="text-4xl font-bold">1119 AED</p>
-        <p className="mt-3 text-blue-100/70">
+        <p className="text-blue-100/70">
           Includes RETA 10MG, GHK-CU 50MG, BAC Water 3ML, and Big Vial Holder.
         </p>
         <div className="mt-7 flex flex-col gap-4 sm:flex-row">
