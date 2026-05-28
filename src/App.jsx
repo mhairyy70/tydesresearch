@@ -813,7 +813,6 @@ function Cart({ cart, subtotal, updateQty, removeItem, go }) {
 function Checkout({ cart, subtotal }) {
   const [confirmed, setConfirmed] = useState(false);
   const [error, setError] = useState("");
-  const [loadingPayment, setLoadingPayment] = useState(false);
 
   const [customer, setCustomer] = useState({
     name: "",
@@ -831,14 +830,35 @@ function Checkout({ cart, subtotal }) {
     }));
   }
 
-  async function submit(e) {
-    e.preventDefault();
+  function buildWhatsAppMessage() {
+    const itemLines = cart
+      .map((item) => `  • ${item.name} × ${item.qty} = ${item.price * item.qty} AED`)
+      .join("\n");
 
+    return [
+      "🛒 NEW ORDER — TYDES Research",
+      "",
+      "── Customer Details ──",
+      `Name:     ${customer.name}`,
+      `Email:    ${customer.email}`,
+      `Phone:    ${customer.phone}`,
+      `Address:  ${customer.address}, ${customer.emirate}`,
+      ...(customer.notes ? [`Notes:    ${customer.notes}`] : []),
+      "",
+      "── Order Items ──",
+      itemLines,
+      "",
+      `TOTAL: ${subtotal} AED`,
+      "",
+      "For laboratory research use only.",
+    ].join("\n");
+  }
+
+  function handleWhatsApp() {
     if (cart.length === 0) {
       setError("Your cart is empty.");
       return;
     }
-
     if (
       !customer.name ||
       !customer.email ||
@@ -849,53 +869,23 @@ function Checkout({ cart, subtotal }) {
       setError("Please complete all required delivery details.");
       return;
     }
-
     if (!confirmed) {
-      setError("Please confirm research-use-only intent before payment.");
+      setError("Please confirm research-use-only intent before placing your order.");
       return;
     }
-
-    try {
-      setError("");
-      setLoadingPayment(true);
-
-      const order = {
-        customer,
-        cart: cart.map((item) => ({
-          id: item.id,
-          qty: item.qty,
-        })),
-      };
-
-      const response = await fetch("/api/create-payment-intent", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(order),
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.error || "Could not start Ziina payment.");
-      }
-
-      sessionStorage.setItem(`tydes_order_${result.id}`, JSON.stringify(order));
-
-      window.location.href = result.redirect_url;
-    } catch (error) {
-      setError(error.message);
-      setLoadingPayment(false);
-    }
+    setError("");
+    window.open(
+      `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(buildWhatsAppMessage())}`,
+      "_blank"
+    );
   }
 
   return (
     <Section
       title="Checkout"
-      subtitle="Complete delivery details and pay securely with Ziina."
+      subtitle="Complete your delivery details and place your order via WhatsApp."
     >
-      <form onSubmit={submit} className="grid gap-8 lg:grid-cols-[1fr_380px]">
+      <div className="grid gap-8 lg:grid-cols-[1fr_380px]">
         <div className="grid gap-4 rounded-[2rem] border border-white/10 bg-white/[0.06] p-6">
           <ControlledInput
             label="Name"
@@ -950,15 +940,6 @@ function Checkout({ cart, subtotal }) {
               Estimated delivery time is 1–3 days after order confirmation.
             </p>
           </div>
-
-          <div className="rounded-2xl border border-white/10 bg-[#061b3c] p-5">
-            <p className="text-sm text-blue-100/60">Payment method</p>
-            <p className="mt-1 font-semibold">Ziina secure payment page</p>
-            <p className="mt-3 text-sm leading-6 text-blue-100/60">
-              You will be redirected to Ziina to complete payment by supported
-              online payment methods.
-            </p>
-          </div>
         </div>
 
         <aside className="h-fit rounded-[2rem] border border-white/10 bg-white/[0.06] p-6">
@@ -986,6 +967,17 @@ function Checkout({ cart, subtotal }) {
             Estimated shipping: 1–3 days.
           </p>
 
+          <div className="mt-4 rounded-2xl border border-white/10 bg-[#061b3c] p-4 text-center">
+            <p className="text-xs uppercase tracking-widest text-blue-100/40">
+              Online Payment
+            </p>
+            <p className="mt-1 font-semibold text-white">Coming Soon</p>
+            <p className="mt-2 text-sm leading-5 text-blue-100/50">
+              Card payments are on the way. For now, place your order via
+              WhatsApp and we'll confirm manually.
+            </p>
+          </div>
+
           <label className="mt-6 flex gap-3 rounded-2xl bg-blue-300/10 p-4 text-sm leading-6">
             <input
               type="checkbox"
@@ -1010,23 +1002,12 @@ function Checkout({ cart, subtotal }) {
           )}
 
           <button
-            disabled={loadingPayment}
-            className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-white px-7 py-4 font-semibold text-[#03142d] transition hover:-translate-y-1 disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            {loadingPayment ? "Opening Ziina..." : "Pay with Ziina"}
-          </button>
-
-          <a
-            href={createWhatsAppUrl(
-              "Hello TYDES Research, I need help with my order or payment."
-            )}
-            target="_blank"
-            rel="noreferrer"
-            className="mt-4 flex w-full items-center justify-center gap-2 rounded-full bg-[#25D366] px-7 py-4 font-semibold text-white transition hover:-translate-y-1"
+            onClick={handleWhatsApp}
+            className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-[#25D366] px-7 py-4 font-semibold text-white transition hover:-translate-y-1"
           >
             <MessageCircle size={18} />
-            Contact on WhatsApp
-          </a>
+            Place Order via WhatsApp
+          </button>
 
           <a
             href={`mailto:${CONTACT_EMAIL}`}
@@ -1035,7 +1016,7 @@ function Checkout({ cart, subtotal }) {
             Need help? Email us: {CONTACT_EMAIL}
           </a>
         </aside>
-      </form>
+      </div>
     </Section>
   );
 }
