@@ -844,23 +844,31 @@ function Checkout({ cart, subtotal }) {
 <head><meta charset="utf-8"><style>
 @page { size: A4; margin: 15mm 20mm; }
 body { font-family: Arial, sans-serif; color: #222; margin: 0; padding: 0; }
-.header { border-bottom: 2px solid #c8a97e; padding-bottom: 20px; margin-bottom: 30px; }
-.brand { font-size: 22px; font-weight: 700; color: #c8a97e; letter-spacing: 2px; }
+.header { border-bottom: 2px solid #1a3a5c; padding-bottom: 20px; margin-bottom: 30px; }
+.brand { font-size: 22px; font-weight: 700; color: #1a3a5c; letter-spacing: 2px; }
 .sub { font-size: 11px; color: #888; letter-spacing: 1px; margin-top: 4px; }
 .meta { display: flex; justify-content: space-between; margin-bottom: 30px; }
 .label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 1px; }
 .value { font-size: 14px; color: #222; margin-top: 4px; }
 table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-th { background: #f5f0e8; padding: 10px 14px; text-align: left; font-size: 11px; letter-spacing: 1px; color: #888; }
+th { background: #e8eff7; padding: 10px 14px; text-align: left; font-size: 11px; letter-spacing: 1px; color: #888; }
 td { padding: 12px 14px; border-bottom: 1px solid #eee; font-size: 14px; }
-.total-row td { font-weight: 700; font-size: 15px; color: #c8a97e; border-bottom: none; }
+.total-row td { font-weight: 700; font-size: 15px; color: #1a3a5c; border-bottom: none; }
 .footer { margin-top: 30px; font-size: 12px; color: #888; border-top: 1px solid #eee; padding-top: 20px; }
 * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
 </style></head>
 <body>
 <div class="header">
-  <div class="brand">TYDES RESEARCH</div>
-  <div class="sub">FOR RESEARCH USE ONLY</div>
+  <div style="display:flex;align-items:center;gap:14px;">
+    <svg viewBox="0 0 320 110" width="56" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M18 63C74 28 127 35 181 62C228 85 270 69 302 18C263 98 203 110 143 78C94 52 55 45 18 63Z" fill="#1a3a5c"/>
+      <path d="M37 75C88 55 126 66 173 90C218 113 253 99 277 84C228 114 185 118 136 94C95 74 66 66 37 75Z" fill="#1a3a5c"/>
+    </svg>
+    <div>
+      <div class="brand">TYDES RESEARCH</div>
+      <div class="sub">FOR RESEARCH USE ONLY</div>
+    </div>
+  </div>
 </div>
 <div style="font-size:20px;font-weight:700;margin-bottom:20px;">ORDER SUMMARY</div>
 <div class="meta">
