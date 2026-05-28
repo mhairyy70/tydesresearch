@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const PASSWORD = "a2262262";
 
@@ -529,6 +529,22 @@ export default function AdminPanel() {
   const [tab, setTab] = useState("stock");
   const [stock, setStock] = useState(INITIAL_STOCK);
 
+  useEffect(() => {
+    fetch('/api/get-stock')
+      .then(r => r.json())
+      .then(data => setStock(data))
+      .catch(console.error);
+  }, []);
+
+  const updateStock = (newStock) => {
+    setStock(newStock);
+    fetch('/api/update-stock', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ stock: newStock }),
+    }).catch(console.error);
+  };
+
   if (!loggedIn) return <LoginScreen onLogin={() => setLoggedIn(true)} />;
 
   return (
@@ -581,7 +597,7 @@ export default function AdminPanel() {
 
         {/* Main Content */}
         <div style={{ flex: 1, padding: "36px 48px" }}>
-          {tab === "stock" && <StockTab stock={stock} setStock={setStock} />}
+          {tab === "stock" && <StockTab stock={stock} setStock={updateStock} />}
           {tab === "quotation" && <QuotationTab stock={stock} />}
           {tab === "invoice" && <InvoiceTab />}
         </div>

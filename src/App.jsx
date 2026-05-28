@@ -188,6 +188,24 @@ function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(products[0]);
   const [paymentStatus, setPaymentStatus] = useState("");
+  const [liveProducts, setLiveProducts] = useState(products);
+
+  useEffect(() => {
+    const STOCK_MAP = { "GHK-CU": "ghk", "RETA": "reta", "BAC Water": "bac", "Big Vial Holder": "holder" };
+    fetch("/api/get-stock")
+      .then((r) => r.json())
+      .then((data) => {
+        setLiveProducts(
+          products.map((p) => {
+            const stockName = Object.keys(STOCK_MAP).find((k) => STOCK_MAP[k] === p.id);
+            if (!stockName) return p;
+            const item = data.find((s) => s.name === stockName);
+            return item ? { ...p, inStock: item.qty > 0 } : p;
+          })
+        );
+      })
+      .catch(console.error);
+  }, []);
 
   const subtotal = useMemo(() => {
     return cart.reduce((sum, item) => sum + item.price * item.qty, 0);
@@ -321,11 +339,11 @@ function App() {
       )}
 
       {page === "home" && (
-        <Home go={go} addToCart={addToCart} openProduct={openProduct} />
+        <Home go={go} addToCart={addToCart} openProduct={openProduct} products={liveProducts} />
       )}
 
       {page === "shop" && (
-        <Shop addToCart={addToCart} openProduct={openProduct} />
+        <Shop addToCart={addToCart} openProduct={openProduct} products={liveProducts} />
       )}
 
       {page === "product" && (
@@ -456,7 +474,7 @@ function Header({ page, go, cartCount, menuOpen, setMenuOpen }) {
   );
 }
 
-function Home({ go, addToCart, openProduct }) {
+function Home({ go, addToCart, openProduct, products }) {
   return (
     <>
       <section className="mx-auto grid max-w-7xl items-center gap-12 px-5 py-20 md:grid-cols-2">
@@ -526,7 +544,7 @@ function Home({ go, addToCart, openProduct }) {
 
       <WhyTydes />
 
-      <Bundle addToCart={addToCart} openProduct={openProduct} />
+      <Bundle addToCart={addToCart} openProduct={openProduct} products={products} />
 
       <Section
         title="FAQ Preview"
@@ -547,7 +565,7 @@ function Home({ go, addToCart, openProduct }) {
   );
 }
 
-function Shop({ addToCart, openProduct }) {
+function Shop({ addToCart, openProduct, products }) {
   return (
     <Section
       title="Shop Research Products"
@@ -1322,7 +1340,7 @@ function WhyTydes() {
   );
 }
 
-function Bundle({ addToCart, openProduct }) {
+function Bundle({ addToCart, openProduct, products }) {
   const bundle = products.find((p) => p.id === "bundle");
 
   return (
