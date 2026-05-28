@@ -897,7 +897,12 @@ td { padding: 12px 14px; border-bottom: 1px solid #eee; font-size: 14px; }
   <thead><tr><th>Product</th><th>Qty</th><th>Unit Price</th><th>Total</th></tr></thead>
   <tbody>
     ${rows}
-    <tr class="total-row"><td colspan="3" style="text-align:right;padding-right:14px;">TOTAL</td><td>${subtotal} AED</td></tr>
+    <tr>
+      <td style="color:#888;">Delivery Fee</td>
+      <td></td><td></td>
+      <td style="color:#888;">60 AED</td>
+    </tr>
+    <tr class="total-row"><td colspan="3" style="text-align:right;padding-right:14px;">TOTAL</td><td>${subtotal + 60} AED</td></tr>
   </tbody>
 </table>
 ${customer.notes ? `<div style="margin-bottom:20px;"><div class="label">Notes</div><div class="value" style="margin-top:6px;">${customer.notes}</div></div>` : ""}
