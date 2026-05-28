@@ -830,31 +830,69 @@ function Checkout({ cart, subtotal }) {
     }));
   }
 
-  function buildWhatsAppMessage() {
-    const itemLines = cart
-      .map((item) => `  • ${item.name} × ${item.qty} = ${item.price * item.qty} AED`)
-      .join("\n");
-
-    return [
-      "🛒 NEW ORDER — TYDES Research",
-      "",
-      "── Customer Details ──",
-      `Name:     ${customer.name}`,
-      `Email:    ${customer.email}`,
-      `Phone:    ${customer.phone}`,
-      `Address:  ${customer.address}, ${customer.emirate}`,
-      ...(customer.notes ? [`Notes:    ${customer.notes}`] : []),
-      "",
-      "── Order Items ──",
-      itemLines,
-      "",
-      `TOTAL: ${subtotal} AED`,
-      "",
-      "For laboratory research use only.",
-    ].join("\n");
+  function buildOrderPDF() {
+    const orderRef = `TYD-${Date.now().toString().slice(-6)}`;
+    const today = new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" });
+    const rows = cart.map((item) => `<tr>
+      <td style="padding:12px 14px;border-bottom:1px solid #eee">${item.name}</td>
+      <td style="padding:12px 14px;border-bottom:1px solid #eee">${item.qty}</td>
+      <td style="padding:12px 14px;border-bottom:1px solid #eee">${item.price} AED</td>
+      <td style="padding:12px 14px;border-bottom:1px solid #eee">${item.price * item.qty} AED</td>
+    </tr>`).join("");
+    return `<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><style>
+@page { size: A4; margin: 15mm 20mm; }
+body { font-family: Arial, sans-serif; color: #222; margin: 0; padding: 0; }
+.header { border-bottom: 2px solid #c8a97e; padding-bottom: 20px; margin-bottom: 30px; }
+.brand { font-size: 22px; font-weight: 700; color: #c8a97e; letter-spacing: 2px; }
+.sub { font-size: 11px; color: #888; letter-spacing: 1px; margin-top: 4px; }
+.meta { display: flex; justify-content: space-between; margin-bottom: 30px; }
+.label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+.value { font-size: 14px; color: #222; margin-top: 4px; }
+table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+th { background: #f5f0e8; padding: 10px 14px; text-align: left; font-size: 11px; letter-spacing: 1px; color: #888; }
+td { padding: 12px 14px; border-bottom: 1px solid #eee; font-size: 14px; }
+.total-row td { font-weight: 700; font-size: 15px; color: #c8a97e; border-bottom: none; }
+.footer { margin-top: 30px; font-size: 12px; color: #888; border-top: 1px solid #eee; padding-top: 20px; }
+* { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+</style></head>
+<body>
+<div class="header">
+  <div class="brand">TYDES RESEARCH</div>
+  <div class="sub">FOR RESEARCH USE ONLY</div>
+</div>
+<div style="font-size:20px;font-weight:700;margin-bottom:20px;">ORDER SUMMARY</div>
+<div class="meta">
+  <div>
+    <div class="label">Reference</div><div class="value">${orderRef}</div>
+    <div class="label" style="margin-top:12px;">Date</div><div class="value">${today}</div>
+  </div>
+  <div>
+    <div class="label">Customer</div>
+    <div class="value">${customer.name}</div>
+    <div class="value">${customer.email}</div>
+    <div class="value">${customer.phone}</div>
+    <div class="value">${customer.address}${customer.emirate ? ", " + customer.emirate : ""}</div>
+  </div>
+</div>
+<table>
+  <thead><tr><th>Product</th><th>Qty</th><th>Unit Price</th><th>Total</th></tr></thead>
+  <tbody>
+    ${rows}
+    <tr class="total-row"><td colspan="3" style="text-align:right;padding-right:14px;">TOTAL</td><td>${subtotal} AED</td></tr>
+  </tbody>
+</table>
+${customer.notes ? `<div style="margin-bottom:20px;"><div class="label">Notes</div><div class="value" style="margin-top:6px;">${customer.notes}</div></div>` : ""}
+<div class="footer">
+  All products are for laboratory/research use only.<br>
+  TYDES Research | tyderesearch0@gmail.com | WhatsApp: +971 50 137 0051
+</div>
+<script>window.onload = function() { window.print(); }</script>
+</body></html>`;
   }
 
-  function handleWhatsApp() {
+  function handleDownloadPDF() {
     if (cart.length === 0) {
       setError("Your cart is empty.");
       return;
@@ -887,8 +925,16 @@ function Checkout({ cart, subtotal }) {
         total: subtotal,
       }),
     }).catch(console.error);
+    const win = window.open("", "_blank");
+    if (win) {
+      win.document.write(buildOrderPDF());
+      win.document.close();
+    }
+  }
+
+  function handleWhatsApp() {
     window.open(
-      `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(buildWhatsAppMessage())}`,
+      createWhatsAppUrl("Hello TYDES Research, I would like to place an order."),
       "_blank"
     );
   }
@@ -896,7 +942,7 @@ function Checkout({ cart, subtotal }) {
   return (
     <Section
       title="Checkout"
-      subtitle="Complete your delivery details and place your order via WhatsApp."
+      subtitle="Complete your delivery details and download your order as a PDF."
     >
       <div className="grid gap-8 lg:grid-cols-[1fr_380px]">
         <div className="grid gap-4 rounded-[2rem] border border-white/10 bg-white/[0.06] p-6">
@@ -1015,11 +1061,18 @@ function Checkout({ cart, subtotal }) {
           )}
 
           <button
+            onClick={handleDownloadPDF}
+            className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-white px-7 py-4 font-semibold text-[#03142d] transition hover:-translate-y-1"
+          >
+            Download Order PDF
+          </button>
+
+          <button
             onClick={handleWhatsApp}
-            className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-[#25D366] px-7 py-4 font-semibold text-white transition hover:-translate-y-1"
+            className="mt-4 flex w-full items-center justify-center gap-2 rounded-full bg-[#25D366] px-7 py-4 font-semibold text-white transition hover:-translate-y-1"
           >
             <MessageCircle size={18} />
-            Place Order via WhatsApp
+            Contact on WhatsApp
           </button>
 
           <a
