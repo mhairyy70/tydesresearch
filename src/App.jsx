@@ -874,6 +874,19 @@ function Checkout({ cart, subtotal }) {
       return;
     }
     setError("");
+    fetch("/api/send-order", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        customerName: customer.name,
+        customerEmail: customer.email,
+        customerPhone: customer.phone,
+        customerAddress: customer.address,
+        customerEmirate: customer.emirate,
+        cartItems: cart,
+        total: subtotal,
+      }),
+    }).catch(console.error);
     window.open(
       `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(buildWhatsAppMessage())}`,
       "_blank"
