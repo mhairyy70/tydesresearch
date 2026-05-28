@@ -196,8 +196,76 @@ function QuotationTab({ stock }) {
   const today = new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" });
   const validUntil = new Date(Date.now() + 7 * 86400000).toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" });
 
+  const downloadPDF = () => {
+    const html = `<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><style>
+@page { size: A4; margin: 15mm 20mm; }
+body { font-family: Arial, sans-serif; color: #222; margin: 0; padding: 0; }
+.header { border-bottom: 2px solid #c8a97e; padding-bottom: 20px; margin-bottom: 30px; }
+.brand { font-size: 22px; font-weight: 700; color: #c8a97e; letter-spacing: 2px; }
+.sub { font-size: 11px; color: #888; letter-spacing: 1px; margin-top: 4px; }
+.meta { display: flex; justify-content: space-between; margin-bottom: 30px; }
+.label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+.value { font-size: 14px; color: #222; margin-top: 4px; }
+table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+th { background: #f5f0e8; padding: 10px 14px; text-align: left; font-size: 11px; letter-spacing: 1px; color: #888; }
+td { padding: 12px 14px; border-bottom: 1px solid #eee; font-size: 14px; }
+.total-row { font-weight: 700; font-size: 15px; color: #c8a97e; }
+.footer { margin-top: 30px; font-size: 12px; color: #888; border-top: 1px solid #eee; padding-top: 20px; }
+* { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+</style></head>
+<body>
+<div class="header">
+  <div class="brand">TYDES RESEARCH</div>
+  <div class="sub">FOR RESEARCH USE ONLY</div>
+</div>
+<div style="font-size:20px;font-weight:700;margin-bottom:20px;">QUOTATION</div>
+<div class="meta">
+  <div>
+    <div class="label">Quotation No.</div><div class="value">${quotationNumber}</div>
+    <div class="label" style="margin-top:12px;">Date</div><div class="value">${today}</div>
+    <div class="label" style="margin-top:12px;">Valid Until</div><div class="value">${validUntil}</div>
+  </div>
+  <div>
+    <div class="label">Customer</div>
+    <div class="value">${customer.name}</div>
+    <div class="value">${customer.email}</div>
+    <div class="value">${customer.phone}</div>
+    <div class="value">${customer.address}${customer.emirate ? ", " + customer.emirate : ""}</div>
+  </div>
+</div>
+<table>
+  <thead><tr><th>Product</th><th>Unit</th><th>Qty</th><th>Unit Price</th><th>Total</th></tr></thead>
+  <tbody>
+    ${lineItems.map(l => `<tr>
+      <td>${l.name}${l.spec ? " " + l.spec : ""}</td>
+      <td>${l.unit}</td>
+      <td>${l.qty}</td>
+      <td>${l.price} AED</td>
+      <td>${l.total} AED</td>
+    </tr>`).join("")}
+    <tr class="total-row"><td colspan="4" style="text-align:right;padding-right:14px;">TOTAL</td><td>${grandTotal} AED</td></tr>
+  </tbody>
+</table>
+${customer.notes ? `<div style="margin-bottom:20px;"><div class="label">Notes</div><div class="value" style="margin-top:6px;">${customer.notes}</div></div>` : ""}
+<div class="footer">
+  This quotation is valid for 7 days from the date above.<br>
+  All products are for laboratory/research use only.<br>
+  TYDES Research | tyderesearch0@gmail.com | WhatsApp: +971 50 137 0051
+</div>
+<script>window.onload = function() { window.print(); }</script>
+</body></html>`;
+    const win = window.open("", "_blank");
+    if (win) {
+      win.document.write(html);
+      win.document.close();
+    }
+  };
+
   const handleSend = async () => {
     if (!customer.name || !customer.email || lineItems.length === 0) return;
+    downloadPDF();
     setSending(true);
 
     const quotationHTML = `
@@ -382,9 +450,16 @@ ${customer.notes ? `<div style="margin-bottom:20px;"><div class="label">Notes</d
         >
           {sending ? "Sending..." : "Send Quotation"}
         </button>
+        <button
+          onClick={downloadPDF}
+          disabled={!customer.name || !customer.email || lineItems.length === 0}
+          style={btnStyle("#333", !customer.name || !customer.email || lineItems.length === 0)}
+        >
+          Download PDF
+        </button>
       </div>
       <div style={{ color: "#444", fontSize: "11px", marginTop: "12px" }}>
-        Will be emailed to customer + tyderesearch0@gmail.com
+        PDF downloads automatically on send. Use Download PDF to save without emailing.
       </div>
     </div>
   );
