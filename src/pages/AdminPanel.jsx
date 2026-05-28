@@ -190,7 +190,9 @@ function QuotationTab({ stock }) {
     return p ? { ...p, qty: it.qty, total: p.price * it.qty } : null;
   }).filter(Boolean);
 
-  const grandTotal = lineItems.reduce((sum, l) => sum + l.total, 0);
+  const DELIVERY_FEE = 60;
+  const subtotal = lineItems.reduce((sum, l) => sum + l.total, 0);
+  const grandTotal = subtotal + DELIVERY_FEE;
 
   const quotationNumber = `TYD-Q-${Date.now().toString().slice(-6)}`;
   const today = new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" });
@@ -245,6 +247,11 @@ td { padding: 12px 14px; border-bottom: 1px solid #eee; font-size: 14px; }
       <td>${l.price} AED</td>
       <td>${l.total} AED</td>
     </tr>`).join("")}
+    <tr>
+      <td style="color:#888;">Delivery Fee</td>
+      <td></td><td></td><td></td>
+      <td style="color:#888;">60 AED</td>
+    </tr>
     <tr class="total-row"><td colspan="4" style="text-align:right;padding-right:14px;">TOTAL</td><td>${grandTotal} AED</td></tr>
   </tbody>
 </table>
@@ -315,6 +322,11 @@ td { padding: 12px 14px; border-bottom: 1px solid #eee; font-size: 14px; }
       <td>${l.price} AED</td>
       <td>${l.total} AED</td>
     </tr>`).join("")}
+    <tr>
+      <td style="color:#888;">Delivery Fee</td>
+      <td></td><td></td><td></td>
+      <td style="color:#888;">60 AED</td>
+    </tr>
     <tr class="total-row"><td colspan="4" style="text-align:right;padding-right:14px;">TOTAL</td><td>${grandTotal} AED</td></tr>
   </tbody>
 </table>
@@ -436,9 +448,19 @@ ${customer.notes ? `<div style="margin-bottom:20px;"><div class="label">Notes</d
 
       {/* Total */}
       {lineItems.length > 0 && (
-        <div style={{ background: "#111", border: "1px solid #2a2a2a", borderRadius: "3px", padding: "16px 20px", marginBottom: "24px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <span style={{ color: "#888", fontSize: "12px", letterSpacing: "2px" }}>TOTAL</span>
-          <span style={{ color: "#c8a97e", fontSize: "20px", fontWeight: "700" }}>{grandTotal} AED</span>
+        <div style={{ background: "#111", border: "1px solid #2a2a2a", borderRadius: "3px", padding: "16px 20px", marginBottom: "24px" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
+            <span style={{ color: "#555", fontSize: "11px", letterSpacing: "2px" }}>SUBTOTAL</span>
+            <span style={{ color: "#888", fontSize: "14px" }}>{subtotal} AED</span>
+          </div>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
+            <span style={{ color: "#555", fontSize: "11px", letterSpacing: "2px" }}>DELIVERY</span>
+            <span style={{ color: "#888", fontSize: "14px" }}>{DELIVERY_FEE} AED</span>
+          </div>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderTop: "1px solid #2a2a2a", paddingTop: "12px" }}>
+            <span style={{ color: "#888", fontSize: "12px", letterSpacing: "2px" }}>TOTAL</span>
+            <span style={{ color: "#c8a97e", fontSize: "20px", fontWeight: "700" }}>{grandTotal} AED</span>
+          </div>
         </div>
       )}
 
