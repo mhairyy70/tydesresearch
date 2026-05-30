@@ -706,10 +706,10 @@ function ProductCard({ product, addToCart, openProduct }) {
         <div className="mt-5 flex justify-end">
           {inStock ? (
             <button
-              onClick={() => addToCart(product)}
-              className="rounded-full bg-white px-5 py-3 text-sm font-semibold text-[#03142d]"
+              disabled
+              className="rounded-full bg-white/10 px-5 py-3 text-sm font-semibold text-white/40 cursor-not-allowed"
             >
-              Add
+              Coming Soon
             </button>
           ) : (
             <button
@@ -761,10 +761,10 @@ function ProductPage({ product, addToCart }) {
 
           {product.inStock ? (
             <button
-              onClick={() => addToCart(product)}
-              className="mt-7 rounded-full bg-white px-8 py-4 font-semibold text-[#03142d]"
+              disabled
+              className="mt-7 rounded-full bg-white/10 px-8 py-4 font-semibold text-white/40 cursor-not-allowed"
             >
-              Add to Cart
+              Coming Soon
             </button>
           ) : (
             <button
