@@ -1090,8 +1090,8 @@ ${customer.notes ? `<div style="margin-bottom:20px;"><div class="label">Notes</d
             </p>
             <p className="mt-1 font-semibold text-white">Coming Soon</p>
             <p className="mt-2 text-sm leading-5 text-blue-100/50">
-              Card payments are on the way. For now, place your order via
-              WhatsApp and we'll confirm manually.
+              We will have online payment available very soon. For now, place
+              your order via WhatsApp and we'll get back to you to confirm.
             </p>
           </div>
 
