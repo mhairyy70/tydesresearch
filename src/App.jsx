@@ -21,7 +21,7 @@ import {
 } from "lucide-react";
 
 // ─── Toggle this to show/hide the coming soon page ───────────────────────────
-const COMING_SOON = true;
+const COMING_SOON = false;
 // ─────────────────────────────────────────────────────────────────────────────
 
 const DISCLAIMER =
