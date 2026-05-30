@@ -78,7 +78,7 @@ const products = [
     price: 60,
     oldPrice: null,
     image: "/images/small-vial-holder.png",
-    text: "Compact TYDES holder designed for a single 3ml research vial.",
+    text: "Compact TYDES holder designed for a 3ml research vial.",
     inStock: true,
   },
   {
