@@ -3,11 +3,11 @@ import { useState, useEffect } from "react";
 const PASSWORD = "a2262262";
 
 const INITIAL_STOCK = [
-  { id: 1, name: "GHK-CU", spec: "50mg", unit: "vial", qty: 5, price: 390 },
-  { id: 2, name: "RETA", spec: "10mg", unit: "vial", qty: 6, price: 660 },
-  { id: 3, name: "BAC Water", spec: "3ml", unit: "vial", qty: 6, price: 60 },
-  { id: 4, name: "Big Vial Holder", spec: "", unit: "piece", qty: 3, price: 220 },
-  { id: 5, name: "Small Vial Holder", spec: "", unit: "piece", qty: 6, price: 70 },
+  { id: 1, name: "GHK-CU", spec: "50mg", unit: "vial", qty: 5, price: 320 },
+  { id: 2, name: "RETA", spec: "10mg", unit: "vial", qty: 6, price: 420 },
+  { id: 3, name: "BAC Water", spec: "3ml", unit: "vial", qty: 6, price: 45 },
+  { id: 4, name: "Big Vial Holder", spec: "", unit: "piece", qty: 3, price: 180 },
+  { id: 5, name: "Small Vial Holder", spec: "", unit: "piece", qty: 6, price: 60 },
 ];
 
 function LoginScreen({ onLogin }) {
