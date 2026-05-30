@@ -72,6 +72,16 @@ const products = [
     inStock: true,
   },
   {
+    id: "small-holder",
+    name: "TYDES Small Vial Holder",
+    category: "Accessory",
+    price: 60,
+    oldPrice: null,
+    image: "/images/small-vial-holder.png",
+    text: "Compact TYDES holder designed for a single 3ml research vial.",
+    inStock: true,
+  },
+  {
     id: "bundle",
     name: "Summer Pack Bundle",
     category: "Bundle",
@@ -238,7 +248,7 @@ function App() {
   const [liveProducts, setLiveProducts] = useState(products);
 
   useEffect(() => {
-    const STOCK_MAP = { "GHK-CU": "ghk", "RETA": "reta", "BAC Water": "bac", "Big Vial Holder": "holder" };
+    const STOCK_MAP = { "GHK-CU": "ghk", "RETA": "reta", "BAC Water": "bac", "Big Vial Holder": "holder", "Small Vial Holder": "small-holder" };
     const BUNDLE_COMPONENTS = ["RETA", "GHK-CU", "BAC Water", "Big Vial Holder"];
     fetch("/api/get-stock")
       .then((r) => r.json())
