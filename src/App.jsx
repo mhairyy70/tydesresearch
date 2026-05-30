@@ -67,7 +67,7 @@ const products = [
     category: "Accessory",
     price: 125,
     oldPrice: null,
-    image: "",
+    image: "/images/vial-holder.png",
     text: "Compact TYDES-branded holder for organizing 3ml and 5ml research vials.",
     inStock: true,
   },
