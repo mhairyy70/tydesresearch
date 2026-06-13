@@ -5,6 +5,8 @@ const PASSWORD = "a2262262";
 const INITIAL_STOCK = [
   { id: 1, name: "GHK-CU", spec: "50mg", unit: "vial", qty: 5, price: 270 },
   { id: 2, name: "RETA", spec: "10mg", unit: "vial", qty: 6, price: 360 },
+  { id: 6, name: "RETA", spec: "15mg", unit: "vial", qty: 0, price: 490 },
+  { id: 7, name: "CJC NO DAC / IPAMORELIN", spec: "5mg/5mg", unit: "vial", qty: 0, price: 350 },
   { id: 3, name: "BAC Water", spec: "3ml", unit: "vial", qty: 6, price: 45 },
   { id: 4, name: "Big Vial Holder", spec: "", unit: "piece", qty: 3, price: 120 },
   { id: 5, name: "Small Vial Holder", spec: "", unit: "piece", qty: 6, price: 60 },
