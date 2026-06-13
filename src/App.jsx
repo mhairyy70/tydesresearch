@@ -38,7 +38,7 @@ const products = [
     price: 360,
     oldPrice: null,
     image: "/images/reta.png",
-    text: "Retatrutide — GLP-1/GIP/glucagon triple agonist lyophilized peptide for metabolic and energy expenditure research.",
+    text: "Retatrutide, a GLP-1/GIP/glucagon triple agonist lyophilized peptide for metabolic and energy expenditure research.",
     overview: "Retatrutide (GLP-1/GIP/glucagon triple agonist) lyophilized peptide. Research areas include metabolic function, adipose tissue reduction, and energy expenditure.",
     storage: "Store lyophilized at -20°C. Keep away from light. Reconstitute with BAC water and use within 28 days once reconstituted.",
     included: "1 × vial of RETA 10MG, research-only label, protective packaging.",
@@ -51,7 +51,7 @@ const products = [
     price: 490,
     oldPrice: null,
     image: "/images/reta-15mg.png",
-    text: "Retatrutide — GLP-1/GIP/glucagon triple agonist lyophilized peptide for metabolic and energy expenditure research.",
+    text: "Retatrutide, a GLP-1/GIP/glucagon triple agonist lyophilized peptide for metabolic and energy expenditure research.",
     overview: "Retatrutide (GLP-1/GIP/glucagon triple agonist) lyophilized peptide. Research areas include metabolic function, adipose tissue reduction, and energy expenditure.",
     storage: "Store lyophilized at -20°C. Keep away from light. Reconstitute with BAC water and use within 28 days once reconstituted.",
     included: "1 × vial of RETA 15MG, research-only label, protective packaging.",
@@ -90,7 +90,7 @@ const products = [
     price: 45,
     oldPrice: null,
     image: "/images/bac-water.png",
-    text: "Bacteriostatic water (0.9% benzyl alcohol) — sterile solvent for reconstituting lyophilized research peptides.",
+    text: "Bacteriostatic water (0.9% benzyl alcohol), a sterile solvent for reconstituting lyophilized research peptides.",
     overview: "Bacteriostatic water (0.9% benzyl alcohol) sterile solvent for reconstituting lyophilized research peptides. Essential support item for any peptide research workflow.",
     storage: "Store at room temperature. Keep sealed until use. Discard if seal is broken or appearance has changed.",
     included: "1 × 3ml BAC water vial.",
@@ -129,7 +129,7 @@ const products = [
     price: 650,
     oldPrice: 795,
     image: summerPackImg,
-    text: "Complete starter research kit — RETA 10MG, GHK-CU 50MG, BAC Water 3ML, and TYDES Big Vial Holder.",
+    text: "Complete starter research kit. Includes RETA 10MG, GHK-CU 50MG, BAC Water 3ML, and TYDES Big Vial Holder.",
     overview: "Complete starter research kit. Includes RETA 10MG (GLP-1/GIP/glucagon triple agonist), GHK-CU 50MG (copper peptide), BAC Water 3ML for reconstitution, and TYDES Big Vial Holder for organised storage.",
     storage: "Store peptide vials at -20°C. Reconstitute with included BAC water when ready for use. Use within 28 days of reconstitution.",
     included: "1 × RETA 10MG, 1 × GHK-CU 50MG, 1 × BAC Water 3ML, 1 × TYDES Big Vial Holder.",
@@ -1395,7 +1395,7 @@ function WhyTydes() {
             </div>
             <h3 className="text-2xl font-semibold">Research-only standard</h3>
             <p className="mt-3 leading-7 text-blue-100/70">
-              Every page clearly reinforces laboratory research use only — no
+              Every page clearly reinforces laboratory research use only. No
               human-use claims, no ambiguity.
             </p>
           </div>
@@ -1406,8 +1406,8 @@ function WhyTydes() {
             </div>
             <h3 className="text-2xl font-semibold">Wave identity</h3>
             <p className="mt-3 leading-7 text-blue-100/70">
-              The TYDES mark represents precision, flow, organization, and trust
-              — a calm identity for serious research.
+              The TYDES mark represents precision, flow, organization, and trust.
+              A calm identity built for serious research.
             </p>
           </div>
         </div>
