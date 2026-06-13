@@ -38,7 +38,10 @@ const products = [
     price: 360,
     oldPrice: null,
     image: "/images/reta.png",
-    text: "Research-use-only lyophilized compound. No human-use claims.",
+    text: "Retatrutide — GLP-1/GIP/glucagon triple agonist lyophilized peptide for metabolic and energy expenditure research.",
+    overview: "Retatrutide (GLP-1/GIP/glucagon triple agonist) lyophilized peptide. Research areas include metabolic function, adipose tissue reduction, and energy expenditure.",
+    storage: "Store lyophilized at -20°C. Keep away from light. Reconstitute with BAC water and use within 28 days once reconstituted.",
+    included: "1 × vial of RETA 10MG, research-only label, protective packaging.",
     inStock: true,
   },
   {
@@ -48,7 +51,10 @@ const products = [
     price: 490,
     oldPrice: null,
     image: "/images/reta-15mg.png",
-    text: "Research-use-only lyophilized compound. No human-use claims.",
+    text: "Retatrutide — GLP-1/GIP/glucagon triple agonist lyophilized peptide for metabolic and energy expenditure research.",
+    overview: "Retatrutide (GLP-1/GIP/glucagon triple agonist) lyophilized peptide. Research areas include metabolic function, adipose tissue reduction, and energy expenditure.",
+    storage: "Store lyophilized at -20°C. Keep away from light. Reconstitute with BAC water and use within 28 days once reconstituted.",
+    included: "1 × vial of RETA 15MG, research-only label, protective packaging.",
     inStock: true,
   },
   {
@@ -58,7 +64,10 @@ const products = [
     price: 350,
     oldPrice: null,
     image: "/images/cjc-ipamorelin.png",
-    text: "Research-use-only blend. No human-use claims.",
+    text: "Dual GHRH/GHRP blend. CJC-1295 No DAC + Ipamorelin for GH axis, body composition, and recovery research.",
+    overview: "Dual GHRH/GHRP blend. CJC-1295 (no DAC) stimulates growth hormone release pulse; Ipamorelin is a selective GH secretagogue. Research areas include GH axis studies, body composition, and recovery research.",
+    storage: "Store at -20°C lyophilized. Reconstitute with BAC water, refrigerate after reconstitution, and use within 28 days.",
+    included: "1 × blend vial (5mg CJC No DAC + 5mg Ipamorelin), research-only label, protective packaging.",
     inStock: true,
   },
   {
@@ -68,7 +77,10 @@ const products = [
     price: 270,
     oldPrice: null,
     image: "/images/ghk-cu.png",
-    text: "Research-use-only compound. No cosmetic or human-use claims.",
+    text: "Copper peptide tripeptide-copper complex. Research areas include wound healing signalling, collagen synthesis, and antioxidant activity.",
+    overview: "Copper peptide tripeptide-copper complex. Research areas include wound healing signalling, collagen synthesis pathways, antioxidant activity, and skin tissue research.",
+    storage: "Store at -20°C. Protect from light and moisture. Stable for 24 months lyophilized.",
+    included: "1 × vial GHK-Cu 50MG, research-only label, protective packaging.",
     inStock: true,
   },
   {
@@ -78,7 +90,10 @@ const products = [
     price: 45,
     oldPrice: null,
     image: "/images/bac-water.png",
-    text: "Sterile laboratory solvent support item for research workflows only.",
+    text: "Bacteriostatic water (0.9% benzyl alcohol) — sterile solvent for reconstituting lyophilized research peptides.",
+    overview: "Bacteriostatic water (0.9% benzyl alcohol) sterile solvent for reconstituting lyophilized research peptides. Essential support item for any peptide research workflow.",
+    storage: "Store at room temperature. Keep sealed until use. Discard if seal is broken or appearance has changed.",
+    included: "1 × 3ml BAC water vial.",
     inStock: true,
   },
   {
@@ -88,7 +103,10 @@ const products = [
     price: 120,
     oldPrice: null,
     image: "/images/big-vial-holder.png",
-    text: "Compact TYDES-branded holder for organizing 3ml and 5ml research vials.",
+    text: "Precision-moulded TYDES-branded storage organiser for 3ml and 5ml research vials. Keeps vials upright, labelled, and protected.",
+    overview: "Precision-moulded TYDES-branded storage organiser for 3ml and 5ml research vials. Keeps vials upright, labelled, and protected during storage.",
+    storage: "No special storage requirements. Keep clean and dry.",
+    included: "1 × TYDES 3-vial holder box.",
     inStock: true,
   },
   {
@@ -99,6 +117,9 @@ const products = [
     oldPrice: null,
     image: "/images/small-vial-holder.png",
     text: "Compact TYDES holder designed for a 3ml research vial.",
+    overview: "Compact TYDES holder designed for a 3ml research vial. Keeps your vial secure, upright, and clearly labelled during storage.",
+    storage: "No special storage requirements. Keep clean and dry.",
+    included: "1 × TYDES small vial holder.",
     inStock: true,
   },
   {
@@ -108,7 +129,10 @@ const products = [
     price: 650,
     oldPrice: 795,
     image: summerPackImg,
-    text: "Includes RETA 10MG, GHK-CU 50MG, BAC Water 3ML, and Big Vial Holder.",
+    text: "Complete starter research kit — RETA 10MG, GHK-CU 50MG, BAC Water 3ML, and TYDES Big Vial Holder.",
+    overview: "Complete starter research kit. Includes RETA 10MG (GLP-1/GIP/glucagon triple agonist), GHK-CU 50MG (copper peptide), BAC Water 3ML for reconstitution, and TYDES Big Vial Holder for organised storage.",
+    storage: "Store peptide vials at -20°C. Reconstitute with included BAC water when ready for use. Use within 28 days of reconstitution.",
+    included: "1 × RETA 10MG, 1 × GHK-CU 50MG, 1 × BAC Water 3ML, 1 × TYDES Big Vial Holder.",
     inStock: true,
   },
 ];
@@ -804,15 +828,15 @@ function ProductPage({ product, addToCart }) {
       <div className="mt-12 grid gap-6 md:grid-cols-3">
         <Info
           title="Product Overview"
-          text="Supplied with clean TYDES presentation, clear product identity, and research-only labeling."
+          text={product.overview || "Supplied with clean TYDES presentation, clear product identity, and research-only labeling."}
         />
         <Info
           title="Storage / Handling"
-          text="Handle according to suitable laboratory standards. Keep sealed, labeled, organized, and documented."
+          text={product.storage || "Handle according to suitable laboratory standards. Keep sealed, labeled, organized, and documented."}
         />
         <Info
           title="What’s Included"
-          text={`1 × ${product.name}, TYDES research-only label, and protective packaging.`}
+          text={product.included || `1 × ${product.name}, TYDES research-only label, and protective packaging.`}
         />
       </div>
     </section>
